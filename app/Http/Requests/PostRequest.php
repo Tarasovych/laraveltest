@@ -33,9 +33,6 @@ class PostRequest extends FormRequest
                 'bail',
                 'string',
                 'required'
-            ],
-            'category_id' => [
-                'required'
             ]
         ];
     }

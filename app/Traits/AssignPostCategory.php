@@ -9,6 +9,7 @@ trait AssignPostCategory
 {
     protected function assignPostCategory(Post $post, $categoryId)
     {
-        $post->postCategory()->associate(PostCategory::findOrFail($categoryId));
+        if ($categoryId)
+            $post->postCategory()->associate(PostCategory::findOrFail($categoryId));
     }
 }
