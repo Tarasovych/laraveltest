@@ -17,10 +17,10 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('post_categories');
+            $table->foreign('category_id')->references('id')->on('post_categories')->onDelete('set null');
         });
     }
 
