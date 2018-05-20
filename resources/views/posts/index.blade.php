@@ -3,11 +3,7 @@
 @section('content')
     <h1 class="d-flex justify-content-center">Posts</h1>
     <div class="container">
-        @if(Request::route()->getName() == 'admin.posts.index')
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-success" href="{{ route('admin.posts.create') }}">Create</a>
-            </div>
-        @endif
+        @yield('admin-post-create')
         <div>
             <button onclick="search()">Search:&nbsp</button>
             <input id="search" type="text"/>
@@ -29,11 +25,12 @@
                 </ul>
             </div>
         </div>
+        @yield('admin-categories-drop')
         <table class="table">
             @foreach($posts as $post)
                 <tr>
                     <td>
-                        <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+                        <a class="draggable" href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
                         @if(Request::route()->getName() == 'admin.posts.index')
                             <div>
                                 <a class="btn btn-warning"
@@ -51,10 +48,6 @@
     </div>
 @endsection
 
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
 <script>
     function search() {
         window.location.href = window.location + '/search?query=' + document.getElementById("search").value

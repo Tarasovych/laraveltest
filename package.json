@@ -18,5 +18,9 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "npm": "^6.0.1",
+        "vue-pagination-2": "^1.6.1"
     }
 }

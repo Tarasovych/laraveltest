@@ -7,10 +7,25 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Traits\AssignPostCategory;
+use http\Env\Request;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class AdminPostController extends PostController
 {
     use AssignPostCategory;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $posts = QueryBuilder::for(Post::class)->paginate(10);
+        $categories = PostCategory::pluck('name', 'id')->all();
+
+        return view('admin.posts.index', compact('posts', 'categories'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,6 +80,9 @@ class AdminPostController extends PostController
         $post = Post::findOrFail($id);
         $post->update($request->all());
         $this->assignPostCategory($post, $request->get('category_id'));
+
+        if ($request->ajax())
+            return ['redirect' => route('admin.posts.index')];
 
         return redirect()->route('admin.posts.index')
             ->with('success', 'Post updated successfully');

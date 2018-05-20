@@ -23,6 +23,8 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->ajax())
+            return [];
         return [
             'title' => [
                 'bail',
